@@ -8,14 +8,26 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = "us-east-2"
 }
 
-resource "aws_s3_bucket" "hamza" {
-  bucket = "my-tf-test-bucket-for-hamza"
+# resource "aws_s3_bucket" "hamza" {
+#   bucket = "my-tf-test-bucket-for-hamza"
+
+#   tags = {
+#     Name        = "Hamza bucket"
+#     Environment = "Dev"
+#     Demo        = "True"
+#   }
+# }
+
+module "website_s3_bucket" {
+  source = "../modules/s3_static_website"
+
+  bucket_prefix = "infotic-work-test-"
 
   tags = {
-    Name        = "Hamza bucket"
-    Environment = "Dev"
+    Terraform   = "true"
+    Environment = "dev"
   }
 }
